@@ -25,7 +25,7 @@ class spacefreight():
                     cargo_data = Cargo(parcel_id, mass, volume,
                                        mass_per_vol)
                     list_cargo.append(cargo_data)
-                    print(cargo_data)
+                    # print(cargo_data)
         return list_cargo
 
     def load_ships(self, filename):
@@ -52,7 +52,7 @@ class spacefreight():
                                            ship_mass, ship_base_costs,
                                            ship_fuel, mass_per_volume)
                     list_ships.append(ship_data)
-                    print(ship_data)
+                    # print(ship_data)
         return list_ships
 if __name__ == "__main__":
     space_freight = spacefreight('List1')
