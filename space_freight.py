@@ -24,14 +24,15 @@ class spacefreight():
                     cargo_data = Cargo(parcel_id, mass, volume,
                                        mass_per_vol)
                     list_cargo.append(cargo_data)
-                    print(cargo_data)
+                    # print(cargo_data)
         return list_cargo
 
     def load_ships(self, filename):
         list_ships = []
         with open(filename) as csv_data:
                 reader = csv.reader(csv_data, delimiter=',')
-                val_sorted = sorted(reader, key = lambda x:float(x[2])/float(x[3]), reverse=False)
+                val_sorted = sorted(reader, key = lambda\
+                                    x:float(x[2])/float(x[3]), reverse=False)
                 for line in val_sorted:
                     ship_name = line[0]
                     ship_location = line[1]
@@ -50,7 +51,7 @@ class spacefreight():
                                            ship_mass, ship_base_costs,
                                            ship_fuel, mass_per_volume)
                     list_ships.append(ship_data)
-                    print(ship_data)
+                    # print(ship_data)
         return list_ships
 if __name__ == "__main__":
     space_freight = spacefreight('List1')
