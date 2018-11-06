@@ -1,4 +1,6 @@
 import csv
+import operator
+import locale
 from space_craft import Spacecraft
 from cargo import Cargo
 
@@ -11,22 +13,21 @@ class spacefreight():
 
     def load_cargo(self, filename):
         list_cargo = []
-        with open(filename) as f:
-            while True:
-                lines = f.readlines()
-                for line in lines:
-                    if len(line) < 26:
-                        line = line.split(',')
-                        parcel_id = line[0]
-                        mass = float(line[1])
-                        volume = float(line [2])
-                        mass_per_vol = mass / volume
-                        cargo_data = Cargo(parcel_id, mass, volume,
-                                           mass_per_vol)
-                        list_cargo.append(cargo_data)
-                if not lines:
-                    break
+        with open(filename) as csv_data:
+                reader = csv.reader(csv_data, delimiter=',')
+                next(reader)
+                val_sorted = sorted(reader, key = lambda x:float(x[1])/float(x[2]), reverse=False)
+                for line in val_sorted:
+                    parcel_id = line[0]
+                    mass = float(line[1])
+                    volume = float(line [2])
+                    mass_per_vol = mass / volume
+                    cargo_data = Cargo(parcel_id, mass, volume,
+                                       mass_per_vol)
+                    list_cargo.append(cargo_data)
+                    print(cargo_data)
         return list_cargo
+
     def load_ships(self, filename):
         list_ships = []
         with open(filename) as f:
@@ -36,22 +37,23 @@ class spacefreight():
                     line = line.split(',')
                     ship_name = line[0]
                     ship_location = line[1]
-                    ship_pay_mass = line[2]
-                    ship_pay_vol = line[3]
-                    ship_mass = line[4]
+                    ship_pay_mass = int(line[2])
+                    ship_pay_vol = float(line[3])
+                    ship_mass = int(line[4])
                     ship_base_costs = line[5]
                     costs = ship_base_costs.split('M')
-                    ship_base_costs = int(costs[0]) * 1000000
+                    locale.setlocale( locale.LC_ALL, 'en_US.UTF-8')
+                    ship_base_costs = locale.currency(int(costs[0]) * 1000000,
+                                                      grouping=True)
                     ship_fuel = line[6]
                     mass_per_volume = int(ship_pay_mass) / float(ship_pay_vol)
                     ship_data = Spacecraft(ship_name, ship_location,
                                            ship_pay_mass, ship_pay_vol,
                                            ship_mass, ship_base_costs,
                                            ship_fuel, mass_per_volume)
-                    list_ships.append(ship_data)
+                    # print(ship_data)
                 if not lines:
                     break
         return list_ships
-
 if __name__ == "__main__":
     space_freight = spacefreight('List1')
