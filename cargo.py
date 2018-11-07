@@ -1,6 +1,6 @@
 
 class Cargo(object):
-    def __init__(self, parcel_id, mass, volume, mass_per_vol):
+    def __init__(self, parcel_id, mass, volume):
         self.parcel_id = parcel_id
         self.mass = mass
         self.volume = volume

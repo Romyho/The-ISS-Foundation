@@ -15,5 +15,4 @@ class Spacecraft(object):
     def __str__(self):
         return str(self.name) + ' ' + str(self.payload_mass) + ' ' + \
         str(self.payload_volume) + ' ' + str(self.mass) + ' ' +\
-        str(self.base_costs) + ' ' + str(self.fuel_to_weight)\
-        + ' ' + str(self.mass_per_volume)
+        str(self.base_costs) + ' ' + str(self.fuel_to_weight)

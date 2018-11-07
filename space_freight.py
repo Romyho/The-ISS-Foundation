@@ -2,6 +2,7 @@ import csv
 import locale
 from space_craft import Spacecraft
 from cargo import Cargo
+from inventory import Inventory
 
 class spacefreight():
     def __init__(self, list):
@@ -24,8 +25,7 @@ class spacefreight():
                     mass = float(line[1])
                     volume = float(line[2])
                     # mass_per_vol = mass / volume
-                    cargo_data = Cargo(parcel_id, mass, volume,
-                                       mass_per_vol)
+                    cargo_data = Cargo(parcel_id, mass, volume)
                     list_cargo.append(cargo_data)
                     # print(cargo_data)
         return list_cargo
@@ -52,41 +52,41 @@ class spacefreight():
                     ship_data = Spacecraft(ship_name, ship_location,
                                            ship_pay_mass, ship_pay_vol,
                                            ship_mass, ship_base_costs,
-                                           ship_fuel, mass_per_volume)
+                                           ship_fuel)
                     list_ships.append(ship_data)
                     # print(ship_data)
         return list_ships
+    def take(self, item):
+        self.current_ship.inventory.add(item)
+
     def calculate(self):
         i = 0
         x = 0
-        list_cargo = []
+        # list_amount = []
         while i < len(self.ships):
             self.current_ship = self.ships[i]
             cur = self.current_ship
+            print(cur)
+            y = 0
             while x < len(self.cargo):
                 self.current_cargo = self.cargo[x]
-                if cur.payload_mass < self.current_cargo.mass or cur.payload_volume < self.current_cargo.volume:
+                if cur.payload_mass < self.current_cargo.mass or\
+                   cur.payload_volume < self.current_cargo.volume:
                     i+=1
-<<<<<<< HEAD
-                    print(list_cargo)
-                    if cur.payload_mass < cargo_mass or cur.payload_volume < cargo_vol:
-=======
-                    if cur.payload_mass < self.current_cargo.mass or cur.payload_volume < self.current_cargo.volume:
->>>>>>> b03eca0820f7d4ec98a8f494f572e78d01386d02
-                        print(cur.name)
-                        print(cur.payload_mass)
-                        print(cur.payload_volume)
-                        print(x)
+                    if cur.payload_mass < self.current_cargo.mass or\
+                       cur.payload_volume < self.current_cargo.volume:
+                        print(cur)
+                        print(cur.name + " will transport " + str(y) + " parcels")
+                        print(' ')
                         break
                 else:
                     cur.payload_mass -= self.current_cargo.mass
                     cur.payload_volume -= self.current_cargo.volume
-                    list_cargo.append(self.current_cargo.parcel_id)
+                space_freight.take(self.current_cargo)
+                print(cur.inventory)
                 x+=1
-
-
-
-
+                y+=1
+        print("Total amount of parcels:", x)
 
 if __name__ == "__main__":
     space_freight = spacefreight('List1')
