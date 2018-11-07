@@ -48,7 +48,7 @@ class spacefreight():
                     ship_base_costs = locale.currency(int(costs[0]) * 1000000,
                                                       grouping=True)
                     ship_fuel = float(line[6])
-                    # mass_per_volume = int(ship_pay_mass) / float(ship_pay_vol)
+                    mass_per_volume = float(line[7])
                     ship_data = Spacecraft(ship_name, ship_location,
                                            ship_pay_mass, ship_pay_vol,
                                            ship_mass, ship_base_costs,
