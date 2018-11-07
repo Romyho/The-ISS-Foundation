@@ -4,7 +4,9 @@ class Cargo(object):
         self.parcel_id = parcel_id
         self.mass = mass
         self.volume = volume
-        self.mass_per_vol = mass_per_vol
+        # self.mass_per_vol = mass_per_vol
+        self.mass_per_vol = mass / volume
+
 
     def __str__(self):
         return str(self.parcel_id) + ' ' + str(self.mass) + ' ' +\
