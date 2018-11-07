@@ -23,7 +23,7 @@ class spacefreight():
                     parcel_id = line[0]
                     mass = float(line[1])
                     volume = float(line[2])
-                    mass_per_vol = mass / volume
+                    # mass_per_vol = mass / volume
                     cargo_data = Cargo(parcel_id, mass, volume,
                                        mass_per_vol)
                     list_cargo.append(cargo_data)
@@ -48,7 +48,7 @@ class spacefreight():
                     ship_base_costs = locale.currency(int(costs[0]) * 1000000,
                                                       grouping=True)
                     ship_fuel = float(line[6])
-                    mass_per_volume = int(ship_pay_mass) / float(ship_pay_vol)
+                    # mass_per_volume = int(ship_pay_mass) / float(ship_pay_vol)
                     ship_data = Spacecraft(ship_name, ship_location,
                                            ship_pay_mass, ship_pay_vol,
                                            ship_mass, ship_base_costs,
@@ -65,14 +65,14 @@ class spacefreight():
             cur = self.current_ship
             while x < len(self.cargo):
                 self.current_cargo = self.cargo[x]
-                cargo_mass = self.current_cargo.mass
-                cargo_vol = self.current_cargo.volume
-                cargo_tot = cargo_mass + cargo_vol
-                ship_tot = cur.payload_mass + cur.payload_volume
-                if cur.payload_mass < cargo_mass or cur.payload_volume < cargo_vol:
+                if cur.payload_mass < self.current_cargo.mass or cur.payload_volume < self.current_cargo.volume:
                     i+=1
+<<<<<<< HEAD
                     print(list_cargo)
                     if cur.payload_mass < cargo_mass or cur.payload_volume < cargo_vol:
+=======
+                    if cur.payload_mass < self.current_cargo.mass or cur.payload_volume < self.current_cargo.volume:
+>>>>>>> b03eca0820f7d4ec98a8f494f572e78d01386d02
                         print(cur.name)
                         print(cur.payload_mass)
                         print(cur.payload_volume)
@@ -83,6 +83,7 @@ class spacefreight():
                     cur.payload_volume -= self.current_cargo.volume
                     list_cargo.append(self.current_cargo.parcel_id)
                 x+=1
+
 
 
 
