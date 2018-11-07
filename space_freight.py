@@ -59,6 +59,7 @@ class spacefreight():
     def calculate(self):
         i = 0
         x = 0
+        list_cargo = []
         while i < len(self.ships):
             self.current_ship = self.ships[i]
             cur = self.current_ship
@@ -67,7 +68,12 @@ class spacefreight():
                 print(f"This is the current_cargo {current_cargo}")
                 if cur.payload_mass < self.current_cargo.mass or cur.payload_volume < self.current_cargo.volume:
                     i+=1
+<<<<<<< HEAD
+                    print(list_cargo)
+                    if cur.payload_mass < cargo_mass or cur.payload_volume < cargo_vol:
+=======
                     if cur.payload_mass < self.current_cargo.mass or cur.payload_volume < self.current_cargo.volume:
+>>>>>>> b03eca0820f7d4ec98a8f494f572e78d01386d02
                         print(cur.name)
                         print(cur.payload_mass)
                         print(cur.payload_volume)
@@ -76,6 +82,7 @@ class spacefreight():
                 else:
                     cur.payload_mass -= self.current_cargo.mass
                     cur.payload_volume -= self.current_cargo.volume
+                    list_cargo.append(self.current_cargo.parcel_id)
                 x+=1
 
 
