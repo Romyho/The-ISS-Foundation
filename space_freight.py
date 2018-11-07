@@ -65,7 +65,7 @@ class spacefreight():
             cur = self.current_ship
             while x < len(self.cargo):
                 self.current_cargo = self.cargo[x]
-                print(f"This is the current_cargo {current_cargo}")
+                # print(f"This is the current_cargo {current_cargo}")
                 if cur.payload_mass < self.current_cargo.mass or cur.payload_volume < self.current_cargo.volume:
                     i+=1
 <<<<<<< HEAD
