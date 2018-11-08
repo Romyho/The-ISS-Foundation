@@ -18,11 +18,8 @@ class spacefreight():
                 reader = csv.reader(csv_data, delimiter=',')
                 next(reader)
                 val_sorted = sorted(reader, key = lambda\
-<<<<<<< HEAD
-                                    x:float(x[1])/float(x[2]), reverse=False)
-=======
-                                    x:float(x[2]), reverse=False)
->>>>>>> 5a2c1db33d587b1af654ba6602754e168cafee8f
+                    x:float(x[1])/float(x[2]), reverse=False)
+                    #x:float(x[2]), reverse=False)
                 for line in val_sorted:
                     parcel_id = line[0]
                     mass = float(line[1])
@@ -58,8 +55,7 @@ class spacefreight():
                     list_ships.append(ship_data)
                     # print(ship_data)
         return list_ships
-<<<<<<< HEAD
-=======
+
     def take(self, item):
         self.current_ship.inventory.add(item)
 
@@ -92,6 +88,5 @@ class spacefreight():
                 y+=1
         print("Total amount of parcels:", x)
 
->>>>>>> 5a2c1db33d587b1af654ba6602754e168cafee8f
 if __name__ == "__main__":
     space_freight = spacefreight('List1')
