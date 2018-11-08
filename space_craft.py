@@ -1,7 +1,7 @@
-
+from inventory import Inventory
 class Spacecraft(object):
     def __init__(self, name, nation, payload_mass, payload_volume, mass,
-                base_costs, fuel_to_weight, mass_per_volume):
+                base_costs, fuel_to_weight):
 
         self.name = name
         self.nation = nation
@@ -10,9 +10,9 @@ class Spacecraft(object):
         self.mass = mass
         self.base_costs = base_costs
         self.fuel_to_weight = fuel_to_weight
-        self.mass_per_volume = mass_per_volume
+        self.mass_per_volume = payload_mass / payload_volume
+        self.inventory = Inventory()
     def __str__(self):
         return str(self.name) + ' ' + str(self.payload_mass) + ' ' + \
         str(self.payload_volume) + ' ' + str(self.mass) + ' ' +\
-        str(self.base_costs) + ' ' + str(self.fuel_to_weight)\
-        + ' ' + str(self.mass_per_volume)
+        str(self.base_costs) + ' ' + str(self.fuel_to_weight)

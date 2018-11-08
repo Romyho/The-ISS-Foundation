@@ -2,6 +2,8 @@ import csv
 import locale
 from space_craft import Spacecraft
 from cargo import Cargo
+from inventory import Inventory
+import matplotlib.pyplot as plt
 
 class spacefreight():
     def __init__(self, list):
@@ -16,14 +18,17 @@ class spacefreight():
                 reader = csv.reader(csv_data, delimiter=',')
                 next(reader)
                 val_sorted = sorted(reader, key = lambda\
+<<<<<<< HEAD
                                     x:float(x[1])/float(x[2]), reverse=False)
+=======
+                                    x:float(x[2]), reverse=False)
+>>>>>>> 5a2c1db33d587b1af654ba6602754e168cafee8f
                 for line in val_sorted:
                     parcel_id = line[0]
                     mass = float(line[1])
                     volume = float(line[2])
-                    mass_per_vol = mass / volume
-                    cargo_data = Cargo(parcel_id, mass, volume,
-                                       mass_per_vol)
+                    # mass_per_vol = mass / volume
+                    cargo_data = Cargo(parcel_id, mass, volume)
                     list_cargo.append(cargo_data)
                     # print(cargo_data)
         return list_cargo
@@ -33,7 +38,7 @@ class spacefreight():
         with open(filename) as csv_data:
                 reader = csv.reader(csv_data, delimiter=',')
                 val_sorted = sorted(reader, key = lambda\
-                                    x:float(x[2])/float(x[3]), reverse=False)
+                                    x:float(x[2]), reverse=True)
                 for line in val_sorted:
                     ship_name = line[0]
                     ship_location = line[1]
@@ -46,13 +51,47 @@ class spacefreight():
                     ship_base_costs = locale.currency(int(costs[0]) * 1000000,
                                                       grouping=True)
                     ship_fuel = float(line[6])
-                    mass_per_volume = int(ship_pay_mass) / float(ship_pay_vol)
                     ship_data = Spacecraft(ship_name, ship_location,
                                            ship_pay_mass, ship_pay_vol,
                                            ship_mass, ship_base_costs,
-                                           ship_fuel, mass_per_volume)
+                                           ship_fuel)
                     list_ships.append(ship_data)
                     # print(ship_data)
         return list_ships
+<<<<<<< HEAD
+=======
+    def take(self, item):
+        self.current_ship.inventory.add(item)
+
+    def calculate(self):
+        i = 0
+        x = 0
+        # list_amount = []
+        while i < len(self.ships):
+            self.current_ship = self.ships[i]
+            cur = self.current_ship
+            print(cur)
+            y = 0
+            while x < len(self.cargo):
+                self.current_cargo = self.cargo[x]
+                if cur.payload_mass < self.current_cargo.mass or\
+                   cur.payload_volume < self.current_cargo.volume:
+                    i+=1
+                    if cur.payload_mass < self.current_cargo.mass or\
+                       cur.payload_volume < self.current_cargo.volume:
+                        print(cur)
+                        print(cur.name + " will transport " + str(y) + " parcels")
+                        print(' ')
+                        break
+                else:
+                    cur.payload_mass -= self.current_cargo.mass
+                    cur.payload_volume -= self.current_cargo.volume
+                space_freight.take(self.current_cargo)
+                print(cur.inventory)
+                x+=1
+                y+=1
+        print("Total amount of parcels:", x)
+
+>>>>>>> 5a2c1db33d587b1af654ba6602754e168cafee8f
 if __name__ == "__main__":
     space_freight = spacefreight('List1')
