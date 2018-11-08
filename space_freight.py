@@ -9,8 +9,6 @@ class spacefreight():
         # call the files that are needed for the operation
         self.ships = self.load_ships(f"spacecraft.txt")
         self.cargo = self.load_cargo(f"CargoLists/Cargo{list}.csv")
-        self.current_ship = self.ships[0]
-        self.current_cargo = self.cargo[0]
 
     def load_cargo(self, filename):
         list_cargo = []
@@ -18,7 +16,7 @@ class spacefreight():
                 reader = csv.reader(csv_data, delimiter=',')
                 next(reader)
                 val_sorted = sorted(reader, key = lambda\
-                                    x:float(x[1])+float(x[2]), reverse=False)
+                                    x:float(x[1])/float(x[2]), reverse=False)
                 for line in val_sorted:
                     parcel_id = line[0]
                     mass = float(line[1])
@@ -56,31 +54,5 @@ class spacefreight():
                     list_ships.append(ship_data)
                     # print(ship_data)
         return list_ships
-    def calculate(self):
-        i = 0
-        x = 0
-        while i < len(self.ships):
-            self.current_ship = self.ships[i]
-            cur = self.current_ship
-            while x < len(self.cargo):
-                self.current_cargo = self.cargo[x]
-                if cur.payload_mass < self.current_cargo.mass or cur.payload_volume < self.current_cargo.volume:
-                    i+=1
-                    if cur.payload_mass < self.current_cargo.mass or cur.payload_volume < self.current_cargo.volume:
-                        print(cur.name)
-                        print(cur.payload_mass)
-                        print(cur.payload_volume)
-                        print(x)
-                        break
-                else:
-                    cur.payload_mass -= self.current_cargo.mass
-                    cur.payload_volume -= self.current_cargo.volume
-                x+=1
-
-
-
-
-
 if __name__ == "__main__":
     space_freight = spacefreight('List1')
-    space_freight.calculate()
