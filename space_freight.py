@@ -3,7 +3,7 @@ import locale
 from space_craft import Spacecraft
 from cargo import Cargo
 from inventory import Inventory
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 class spacefreight():
     def __init__(self, list):
@@ -18,7 +18,7 @@ class spacefreight():
                 reader = csv.reader(csv_data, delimiter=',')
                 next(reader)
                 val_sorted = sorted(reader, key = lambda\
-                    x:float(x[1])/float(x[2]), reverse=False)
+                    x:float(x[2])+float(x[1]), reverse=False)
                     #x:float(x[2]), reverse=False)
                 for line in val_sorted:
                     parcel_id = line[0]
@@ -28,6 +28,7 @@ class spacefreight():
                     cargo_data = Cargo(parcel_id, mass, volume)
                     list_cargo.append(cargo_data)
                     # print(cargo_data)
+                    # print(mass, volume)
         return list_cargo
 
     def load_ships(self, filename):
@@ -63,30 +64,32 @@ class spacefreight():
         i = 0
         x = 0
         # list_amount = []
-        while i < len(self.ships):
+        while i < len(self.ships): # gaat over alle schepen
             self.current_ship = self.ships[i]
             cur = self.current_ship
             print(cur)
             y = 0
             while x < len(self.cargo):
                 self.current_cargo = self.cargo[x]
+                # Upperbound
                 if cur.payload_mass < self.current_cargo.mass or\
                    cur.payload_volume < self.current_cargo.volume:
-                    i+=1
+                    i+=1 # volgend schip
                     if cur.payload_mass < self.current_cargo.mass or\
                        cur.payload_volume < self.current_cargo.volume:
-                        print(cur)
+                        print(cur) # print huidige data: wat is er over aan mass & volume
                         print(cur.name + " will transport " + str(y) + " parcels")
-                        print(' ')
+                        print() ##
                         break
-                else:
+                else: # als het wel ingeladen kan worden:
                     cur.payload_mass -= self.current_cargo.mass
                     cur.payload_volume -= self.current_cargo.volume
                 space_freight.take(self.current_cargo)
                 print(cur.inventory)
-                x+=1
-                y+=1
-        print("Total amount of parcels:", x)
+                x+=1 # volgende item
+                y+=1 # volgende item voor dit schip
+        print("Total amount of parcels:", x) # hoe vaak de loop in
 
 if __name__ == "__main__":
     space_freight = spacefreight('List1')
+    space_freight.calculate()
