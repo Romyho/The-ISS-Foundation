@@ -19,7 +19,7 @@ class spacefreight():
                 reader = csv.reader(csv_data, delimiter=',')
                 next(reader)
                 val_sorted = sorted(reader, key = lambda\
-                    x:float(x[1]), reverse=False)
+                    x:float(x[1]), reverse=True)
                     #x:float(x[2]), reverse=False)
                 for line in val_sorted:
                     parcel_id = line[0]
@@ -37,7 +37,7 @@ class spacefreight():
         with open(filename) as csv_data:
                 reader = csv.reader(csv_data, delimiter=',')
                 val_sorted = sorted(reader, key = lambda\
-                                    x:float(x[3]), reverse=True)
+                                    x:float(x[6]), reverse=True)
                 for line in val_sorted:
                     ship_name = line[0]
                     ship_location = line[1]
