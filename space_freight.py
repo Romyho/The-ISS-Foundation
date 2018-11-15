@@ -19,7 +19,7 @@ class spacefreight():
                 reader = csv.reader(csv_data, delimiter=',')
                 next(reader)
                 val_sorted = sorted(reader, key = lambda\
-                    x:float(x[1]), reverse=False)
+                    x:float(x[1])/float(x[2]), reverse=True)
                     #x:float(x[2]), reverse=False)
                 for line in val_sorted:
                     parcel_id = line[0]
@@ -37,7 +37,7 @@ class spacefreight():
         with open(filename) as csv_data:
                 reader = csv.reader(csv_data, delimiter=',')
                 val_sorted = sorted(reader, key = lambda\
-                                    x:float(x[2])+float(x[4]), reverse=False)
+                                    x:float(x[2])/float(x[3]), reverse=True)
                 for line in val_sorted:
                     ship_name = line[0]
                     ship_location = line[1]
@@ -62,10 +62,12 @@ class spacefreight():
         self.current_ship.inventory.add(item)
 
     def calculate(self):
+        ship_list = []
         i = 0
+        print(i)
         for x in range(100):
             x = random.randint(0,100)
-        print(x)
+        # print(x)
         z = 0
         list_amount = []
         while i < len(self.ships): # gaat over alle schepen
@@ -75,27 +77,48 @@ class spacefreight():
             y = 0
             while z < len(self.cargo):
                 self.current_cargo = self.cargo[x%100]
+                print('hallo', x)
                 # Upperbound
                 if cur.payload_mass < self.current_cargo.mass or\
                    cur.payload_volume < self.current_cargo.volume:
-                    i+=1 # volgend schip
-                    if cur.payload_mass < self.current_cargo.mass or\
-                       cur.payload_volume < self.current_cargo.volume:
+                    x+=1
+                    z+=1
+                    print('het past niet', x)
+                    # if cur.payload_mass < self.current_cargo.mass or\
+                    #    cur.payload_volume < self.current_cargo.volume:
+                    #
+                        # i+=1 # volgend schip
                         # print(cur) # print huidige data: wat is er over aan mass & volume
                         # print(cur.name + " will transport " + str(y) + " parcels")
                         # print() ##
-                        break
+                        # break
+                elif self.current_cargo in ship_list:
+                    print('dubbel')
+                    x+=1
+                    z+=1
                 else: # als het wel ingeladen kan worden:
                     cur.payload_mass -= self.current_cargo.mass
                     cur.payload_volume -= self.current_cargo.volume
-                space_freight.take(self.current_cargo)
+                    x+=1
+                    z+=1
+                    space_freight.take(self.current_cargo)
+                    ship_list.append(self.current_cargo)
                 # print(cur.inventory)
-                x+=1 # volgende item
-                z+=1
+                 # volgende item
                 y+=1 # volgende item voor dit schip
-            if z >= 85:
-                print("Total amount of parcels:", z) # hoe vaak de loop in
-                print()
+                if z == 100:
+                    print('aaaaaaaaaa')
+                    print(z)
+                    print(cur.name)
+                    if i < len(self.ships):
+                        z = 0
+                        i+=1
+                        print(i)
+
+            #     start_number = x - z
+            #     print('The start number is: ', start_number)
+            #     print("Total amount of parcels:", z) # hoe vaak de loop in
+            #     print()
 
         # while i < len(self.cargo): # gaat over alle schepen
         #     self.current_cargo = self.cargo[i]
@@ -125,7 +148,7 @@ class spacefreight():
         # print("Total amount of parcels:", x) # hoe vaak de loop in
 if __name__ == "__main__":
     d = 0
-    while d <= 10000:
+    while d <= 1:
         space_freight = spacefreight('List1')
         space_freight.calculate()
         d+=1
