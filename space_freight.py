@@ -19,7 +19,7 @@ class spacefreight():
                 reader = csv.reader(csv_data, delimiter=',')
                 next(reader)
                 val_sorted = sorted(reader, key = lambda\
-                    x:float(x[1]), reverse=True)
+                    x:float(x[2])/float(x[1]), reverse=False)
                     #x:float(x[2]), reverse=False)
                 for line in val_sorted:
                     parcel_id = line[0]
@@ -37,7 +37,7 @@ class spacefreight():
         with open(filename) as csv_data:
                 reader = csv.reader(csv_data, delimiter=',')
                 val_sorted = sorted(reader, key = lambda\
-                                    x:float(x[6]), reverse=True)
+                                    x:float(x[3])/float(x[2]), reverse=False)
                 for line in val_sorted:
                     ship_name = line[0]
                     ship_location = line[1]
@@ -63,11 +63,12 @@ class spacefreight():
 
     def calculate(self):
         ship_list = []
-        i = 0
+        # i = 1
         for i in range(4):
             i = random.randint(0,4)
         for x in range(100):
             x = random.randint(0,100)
+        # x = 41
         count_cargo = 0
         count_ships = 0
         list_amount = []
@@ -78,12 +79,12 @@ class spacefreight():
             y = 0
             aantal = 0
             while count_cargo < len(self.cargo):
-                self.current_cargo = self.cargo[x%100]
+                self.current_cargo = self.cargo[x%97]
                 if cur.payload_mass < self.current_cargo.mass or\
                    cur.payload_volume < self.current_cargo.volume:
                     x+=1
                     count_cargo+=1
-                elif self.current_cargo in ship_list:
+                elif self.current_cargo.parcel_id in ship_list:
                     x+=1
                     count_cargo+=1
                 else: # als het wel ingeladen kan worden:
@@ -93,16 +94,18 @@ class spacefreight():
                     count_cargo+=1
                     aantal+=1
                     space_freight.take(self.current_cargo)
-                    ship_list.append(self.current_cargo)
+                    ship_list.append(self.current_cargo.parcel_id)
             count_cargo = 0
             i+=1
             count_ships+=1
+            # print(cur)
         if len(ship_list) >= 90:
             start_ships = i - count_ships
             start_cargo = x % 100
             print('the start number for cargo list = ', start_cargo)
             print('the start number for ship list = ', start_ships)
             print('the max value is: ', len(ship_list))
+            # print(ship_list)
             print()
 
         # while i < len(self.cargo): # gaat over alle schepen
