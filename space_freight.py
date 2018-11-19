@@ -63,43 +63,43 @@ class spacefreight():
 
     def calculate(self):
         ship_list = []
-        i = 0
-        for i in range(4):
-            i = random.randint(0,4)
-        for x in range(100):
-            x = random.randint(0,100)
+        ship = 0
+        for ship in range(4):
+            ship = random.randint(0,4)
+        for item in range(100):
+            item = random.randint(0,100)
         count_cargo = 0
         count_ships = 0
         list_amount = []
         while count_ships < len(self.ships): # gaat over alle schepen
-            self.current_ship = self.ships[i%4]
+            self.current_ship = self.ships[ship%4]
             cur = self.current_ship
             # print(cur)
             y = 0
             aantal = 0
             while count_cargo < len(self.cargo):
-                self.current_cargo = self.cargo[x%100]
+                self.current_cargo = self.cargo[item%100]
                 if cur.payload_mass < self.current_cargo.mass or\
                    cur.payload_volume < self.current_cargo.volume:
-                    x+=1
+                    item+=1
                     count_cargo+=1
                 elif self.current_cargo in ship_list:
-                    x+=1
+                    item+=1
                     count_cargo+=1
                 else: # als het wel ingeladen kan worden:
                     cur.payload_mass -= self.current_cargo.mass
                     cur.payload_volume -= self.current_cargo.volume
-                    x+=1
+                    item+=1
                     count_cargo+=1
                     aantal+=1
                     space_freight.take(self.current_cargo)
                     ship_list.append(self.current_cargo)
             count_cargo = 0
-            i+=1
+            ship+=1
             count_ships+=1
         if len(ship_list) >= 90:
-            start_ships = i - count_ships
-            start_cargo = x % 100
+            start_ships = ship - count_ships
+            start_cargo = item % 100
             print('the start number for cargo list = ', start_cargo)
             print('the start number for ship list = ', start_ships)
             print('the max value is: ', len(ship_list))
